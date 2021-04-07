@@ -1,0 +1,27 @@
+{
+    "name": "verdient/rukawa",
+    "description": "Rukawa API SDK",
+    "type": "library",
+    "keywords": ["Rukawa", "API", "SDK"],
+    "homepage": "https://github.com/Verdient/rukawa",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Verdient.",
+            "email": "fagui.zhu@foxmail.com",
+            "homepage": "https://github.com/Verdient"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Verdient/rukawa/issues",
+        "source": "https://github.com/Verdient/rukawa"
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "verdient/chorus": ">=0.0.6",
+        "verdient/http": ">=0.3.0"
+    },
+    "autoload": {
+        "psr-4": {"Verdient\\Rukawa\\": "src"}
+    }
+}
