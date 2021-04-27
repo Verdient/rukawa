@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Verdient\Rukawa;
 
-use chorus\BaseObject;
+use Verdient\HttpAPI\AbstractClient;
 
 /**
  * Rukawa
  * @author Verdient。
  */
-class Rukawa extends BaseObject
+class Rukawa extends AbstractClient
 {
     /**
      * @var string 主机地址
@@ -52,38 +52,28 @@ class Rukawa extends BaseObject
      * @inheritdoc
      * @author Verdient。
      */
-    public function init()
+    public function __construct($config = [])
     {
-        parent::init();
+        parent::__construct($config);
         if($this->tmpDir === null){
             $this->tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'rukawa';
         }
     }
 
     /**
-     * 获取认证客户端
-     * @return Authentication
+     * 获取请求
+     * @return Request
      * @author Verdient。
      */
-    public function authentication(){
-        return new Authentication($this);
-    }
-
-    /**
-     * 获取面单客户端
-     * @return Waybill
-     * @author Verdient。
-     */
-    public function waybill(){
-        return new Waybill($this);
-    }
-
-    /**
-     * 获取物理追踪客户端
-     * @return Tracking
-     * @author Verdient。
-     */
-    public function tracking(){
-        return new Tracking($this);
+    public function request($path): Request
+    {
+        $this->request = Request::class;
+        $request = parent::request($path);
+        $request->bodySerializer = 'json';
+        $request->username = $this->username;
+        $request->password = $this->password;
+        $request->tmpDir = $this->tmpDir;
+        $request->requestPath = $this->getRequestPath();
+        return $request;
     }
 }

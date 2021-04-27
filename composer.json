@@ -18,8 +18,7 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "verdient/chorus": ">=0.0.6",
-        "verdient/http": ">=0.3.0"
+        "verdient/http-api": "~0.0.0"
     },
     "autoload": {
         "psr-4": {"Verdient\\Rukawa\\": "src"}
