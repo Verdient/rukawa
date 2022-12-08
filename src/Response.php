@@ -22,10 +22,10 @@ class Response extends AbstractResponse
     {
         $result = new Result;
         $data = $response->getBody();
-        if($response->getStatusCode() === 200 && isset($data['code']) && $data['code'] === 200){
+        if ($response->getStatusCode() == 200 && isset($data['code']) && $data['code'] == 200) {
             $result->isOK = true;
             $result->data = $data['data'] ?? null;
-        }else{
+        } else {
             $result->errorCode = $data['code'] ?? $response->getStatusCode();
             $result->errorMessage = $data['msg'] ?? $response->getRawContent();
         }
