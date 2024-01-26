@@ -64,30 +64,30 @@ class Request extends \Verdient\http\Request
     public function getAccessToken()
     {
         $path = $this->tmpDir . DIRECTORY_SEPARATOR . 'access_token';
-        if(!is_dir($this->tmpDir)){
+        if (!is_dir($this->tmpDir)) {
             mkdir($this->tmpDir, 0777, true);
         }
         $accessToken = null;
         $type = null;
-        if(file_exists($path)){
-            try{
+        if (file_exists($path)) {
+            try {
                 $content = unserialize(file_get_contents($path));
                 $expiredAt = $content['expiredAt'] ?? 0;
-                if($expiredAt > time() - 60){
+                if ($expiredAt > time() - 60) {
                     $accessToken = $content['accessToken'] ?? null;
                     $type = $content['type'] ?? null;
                 }
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 unlink($path);
             }
         }
-        if(!$accessToken){
+        if (!$accessToken) {
             $request = new static;
-            $response = $request->setUrl($this->requestPath . '/api/getToken')->setBody([
+            $response = $request->setUrl($this->requestPath . '/user-auth/get-token')->setBody([
                 'name' => $this->username,
                 'password' => $this->password
-            ])->setMethod('POST')->send();
-            if($response->getIsOK()){
+            ])->setMethod('GET')->send();
+            if ($response->getIsOK()) {
                 $data = $response->getData();
                 $accessToken = $data['access_token'];
                 $type = $data['token_type'];
@@ -96,7 +96,7 @@ class Request extends \Verdient\http\Request
                     'type' => $type,
                     'expiredAt' => $data['expires_in']
                 ]));
-            }else{
+            } else {
                 throw new InvalidCallException($response->getErrorMessage());
             }
         }
