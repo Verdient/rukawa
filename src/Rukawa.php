@@ -23,7 +23,7 @@ class Rukawa extends AbstractClient
      * @var int 端口
      * @author Verdient。
      */
-    public $port = 80;
+    public $port = null;
 
     /**
      * @var string 签名秘钥
