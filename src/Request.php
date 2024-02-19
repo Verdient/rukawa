@@ -83,10 +83,14 @@ class Request extends \Verdient\http\Request
         }
         if (!$accessToken) {
             $request = new static;
-            $response = $request->setUrl($this->requestPath . '/user-auth/get-token')->setBody([
-                'name' => $this->username,
-                'password' => $this->password
-            ])->setMethod('GET')->send();
+            $response = $request
+                ->setUrl($this->requestPath . '/user-auth/get-token')
+                ->setQuery([
+                    'name' => $this->username,
+                    'password' => $this->password
+                ])
+                ->setMethod('GET')
+                ->send();
             if ($response->getIsOK()) {
                 $data = $response->getData();
                 $accessToken = $data['access_token'];
