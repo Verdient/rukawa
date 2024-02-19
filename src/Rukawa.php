@@ -55,7 +55,7 @@ class Rukawa extends AbstractClient
     public function __construct($config = [])
     {
         parent::__construct($config);
-        if($this->tmpDir === null){
+        if ($this->tmpDir === null) {
             $this->tmpDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'rukawa';
         }
     }
@@ -68,6 +68,7 @@ class Rukawa extends AbstractClient
     public function request($path): Request
     {
         $this->request = Request::class;
+        /** @var Request */
         $request = parent::request($path);
         $request->bodySerializer = 'json';
         $request->username = $this->username;
