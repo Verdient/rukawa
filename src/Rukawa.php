@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Verdient\Rukawa;
 
+use Verdient\http\serializer\body\JsonBodySerializer;
 use Verdient\HttpAPI\AbstractClient;
 
 /**
@@ -70,7 +71,7 @@ class Rukawa extends AbstractClient
         $this->request = Request::class;
         /** @var Request */
         $request = parent::request($path);
-        $request->bodySerializer = 'json';
+        $request->setBodySerializer(JsonBodySerializer::class);
         $request->username = $this->username;
         $request->password = $this->password;
         $request->tmpDir = $this->tmpDir;
